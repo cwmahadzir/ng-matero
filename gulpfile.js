@@ -53,14 +53,13 @@ function copyEnvironments(cb) {
 function copySrcApp(cb) {
   return src([
     'src/app/**/*',
-    '!src/app/core/core.module.ts',
     '!src/app/core/settings.ts',
     '!src/app/routes/**/*',
     '!src/app/shared/shared.module.ts',
     '!src/app/theme/admin-layout/*.html',
-    '!src/app/theme/admin-layout/header/*.html',
-    '!src/app/theme/admin-layout/header/github.*',
-    '!src/app/theme/admin-layout/customizer/**',
+    '!src/app/theme/header/*.html',
+    '!src/app/theme/header/github.*',
+    '!src/app/theme/customizer/**',
     '!src/app/theme/theme.module.ts',
     '!src/app/app.module.ts',
   ]).pipe(dest(`${FILES}/src/app`));
@@ -84,11 +83,9 @@ function updateVersions(cb) {
           '@ng-select/ng-select',
           '@ngx-formly/core',
           '@ngx-formly/material',
-          '@ngx-progressbar/core',
-          '@ngx-progressbar/router',
           '@ngx-translate/core',
           '@ngx-translate/http-loader',
-          'hammerjs',
+          'ngx-progressbar',
           'ngx-toastr',
           'photoviewer',
           'screenfull',
@@ -102,7 +99,7 @@ function updateVersions(cb) {
           'stylelint-scss',
         ].forEach(name => {
           if (!pkg.dependencies[name] && !pkg.devDependencies[name]) {
-            cb('依赖名称不存在！');
+            cb(`${name} not found！`);
           }
           content = content.replace(
             `${name}@0.0.0-PLACEHOLDER`,

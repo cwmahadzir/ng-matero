@@ -1,78 +1,82 @@
 import { Injectable } from '@angular/core';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { Observable } from 'rxjs/internal/Observable';
 
-export interface Tag {
+export interface MenuTag {
   color: string; // Background Color
   value: string;
 }
 
-export interface ChildrenItem {
-  state: string;
+export interface MenuChildrenItem {
+  route: string;
   name: string;
   type: 'link' | 'sub' | 'extLink' | 'extTabLink';
-  children?: ChildrenItem[];
+  children?: MenuChildrenItem[];
 }
 
 export interface Menu {
-  state: string;
+  route: string;
   name: string;
   type: 'link' | 'sub' | 'extLink' | 'extTabLink';
   icon: string;
-  label?: Tag;
-  badge?: Tag;
-  children?: ChildrenItem[];
+  label?: MenuTag;
+  badge?: MenuTag;
+  children?: MenuChildrenItem[];
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuService {
-  private menu: Menu[] = [];
+  private menu: BehaviorSubject<Menu[]> = new BehaviorSubject<Menu[]>([]);
 
-  getAll(): Menu[] {
-    return this.menu;
+  getAll(): Observable<Menu[]> {
+    return this.menu.asObservable();
   }
 
-  set(menu: Menu[]): Menu[] {
-    this.menu = [].concat(menu);
-    return this.menu;
+  set(menu: Menu[]): Observable<Menu[]> {
+    this.menu.next(menu);
+    return this.menu.asObservable();
   }
 
   add(menu: Menu) {
-    this.menu.push(menu);
+    const tmpMenu = this.menu.value;
+    tmpMenu.push(menu);
+    this.menu.next(tmpMenu);
   }
 
   reset() {
-    this.menu = [];
+    this.menu.next([]);
   }
 
-  getMenuItemName(stateArr: string[]): string {
-    return this.getMenuLevel(stateArr)[stateArr.length - 1];
+  getMenuItemName(routeArr: string[]): string {
+    return this.getMenuLevel(routeArr)[routeArr.length - 1];
   }
 
   // TODO:
-  getMenuLevel(stateArr: string[]): string[] {
+  getMenuLevel(routeArr: string[]): string[] {
     const tmpArr = [];
-    this.menu.map(item => {
-      if (item.state === stateArr[0]) {
+    this.menu.value.forEach(item => {
+      if (item.route === routeArr[0]) {
         tmpArr.push(item.name);
         // Level1
         if (item.children && item.children.length) {
           item.children.forEach(itemlvl1 => {
-            if (stateArr[1] && itemlvl1.state === stateArr[1]) {
+            if (routeArr[1] && itemlvl1.route === routeArr[1]) {
               tmpArr.push(itemlvl1.name);
               // Level2
               if (itemlvl1.children && itemlvl1.children.length) {
                 itemlvl1.children.forEach(itemlvl2 => {
-                  if (stateArr[2] && itemlvl2.state === stateArr[2]) {
+                  if (routeArr[2] && itemlvl2.route === routeArr[2]) {
                     tmpArr.push(itemlvl2.name);
                   }
                 });
               }
-            } else if (stateArr[1]) {
+            } else if (routeArr[1]) {
               // Level2
               if (itemlvl1.children && itemlvl1.children.length) {
                 itemlvl1.children.forEach(itemlvl2 => {
-                  if (itemlvl2.state === stateArr[1]) {
+                  if (itemlvl2.route === routeArr[1]) {
                     tmpArr.push(itemlvl1.name, itemlvl2.name);
                   }
                 });
@@ -83,5 +87,14 @@ export class MenuService {
       }
     });
     return tmpArr;
+  }
+
+  recursMenuForTranslation(menu: Menu[] | MenuChildrenItem[], namespace: string) {
+    menu.forEach(menuItem => {
+      menuItem.name = `${namespace}.${menuItem.name}`;
+      if (menuItem.children && menuItem.children.length > 0) {
+        this.recursMenuForTranslation(menuItem.children, menuItem.name);
+      }
+    });
   }
 }

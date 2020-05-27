@@ -1,29 +1,33 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { AppSettings, defaults } from '../settings';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SettingsService {
-  private notice$ = new Subject<any>();
+  private _options = defaults;
 
-  private options = defaults;
-
-  get notice(): Observable<any> {
-    return this.notice$.asObservable();
+  get notify(): Observable<any> {
+    return this._notify$.asObservable();
   }
+  private _notify$ = new BehaviorSubject<any>({});
 
   setLayout(options?: AppSettings): AppSettings {
-    this.options = Object.assign(defaults, options);
-    return this.options;
+    this._options = Object.assign(defaults, options);
+    return this._options;
   }
 
   setNavState(type: string, value: boolean) {
-    this.notice$.next({ type, value } as any);
+    this._notify$.next({ type, value } as any);
   }
 
   getOptions(): AppSettings {
-    return this.options;
+    return this._options;
+  }
+
+  setLanguage(lang: string) {
+    this._options.language = lang;
+    this._notify$.next({ lang });
   }
 }

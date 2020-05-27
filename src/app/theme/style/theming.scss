@@ -3,12 +3,14 @@
 @import 'variables';
 @import 'mixins';
 
-// Layout & Widgets
+// Core styles of layout
 @import 'core';
-@import 'widgets';
 
-// Material
-@import 'material';
+// Material color helpers
+@import 'colors';
+
+// Decorative widgets
+@import 'widgets';
 
 // Create admin theme
 @mixin matero-admin-theme($theme) {

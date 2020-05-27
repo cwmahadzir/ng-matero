@@ -12,19 +12,20 @@ NG-MATERO
 
 Ng-Matero is an Angular admin template made with Material components.
 
-[![npm](https://img.shields.io/npm/v/ng-matero.svg?style=flat-square)](https://www.npmjs.com/package/ng-matero)
-[![GitHub Release Date](https://img.shields.io/github/release-date/ng-matero/ng-matero?style=flat-square)](https://github.com/ng-matero/ng-matero/releases)
-[![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://prettier.io/)
-[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg?style=flat-square)](https://github.com/ng-matero/ng-matero/blob/master/LICENSE)
-[![Gitter](https://img.shields.io/gitter/room/ng-matero/ng-matero.svg?style=flat-square)](https://gitter.im/matero-io/ng-matero)
-[![docs](https://img.shields.io/badge/docs-gitbook-blue?style=flat-square)](https://nzbin.gitbook.io/ng-matero/)
-[![Material Extensions](https://img.shields.io/badge/material-extensions-blue?style=flat-square)](https://github.com/ng-matero/extensions#readme)
+[![npm](https://img.shields.io/npm/v/ng-matero.svg)](https://www.npmjs.com/package/ng-matero)
+[![GitHub Release Date](https://img.shields.io/github/release-date/ng-matero/ng-matero)](https://github.com/ng-matero/ng-matero/releases)
+[![prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://prettier.io/)
+[![GitHub license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://github.com/ng-matero/ng-matero/blob/master/LICENSE)
+[![Gitter](https://img.shields.io/gitter/room/ng-matero/ng-matero.svg)](https://gitter.im/matero-io/ng-matero)
+[![docs](https://img.shields.io/badge/docs-gitbook-blue)](https://nzbin.gitbook.io/ng-matero/)
+[![Material Extensions](https://img.shields.io/badge/material-extensions-blue)](https://github.com/ng-matero/extensions#readme)
 [![Financial Contributors on Open Collective](https://opencollective.com/ng-matero/all/badge.svg?label=financial+contributors)](https://opencollective.com/ng-matero)
 
 </div>
 
 ## ✨ Features
 
+- Material Extensions
 - Schematics support
 - Modern design style
 - Various layout
@@ -32,11 +33,20 @@ Ng-Matero is an Angular admin template made with Material components.
 - Rich helpers
 - Common Page Templates
 - RTL support
-- Material Extensions
+- Internationalization
 
 ## 📖 Documents
 
 [English](https://nzbin.gitbook.io/ng-matero/v/en/) ｜[简体中文](https://nzbin.gitbook.io/ng-matero/)
+
+## 📦 Compatibility
+
+Which version to use?
+
+| Angular | Material | Ng-Matero | Extensions |
+| ------- | -------- | --------- | ---------- |
+| v9      | v9       | 9.x.x     | 9.x.x      |
+| v8      | v8       | 0.16.0    | 0.9.3      |
 
 ## 🔧 Installation
 
@@ -106,7 +116,7 @@ $ npm run hmr
 
 Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-## 🗺 Road Map
+## 🗺 Roadmap
 
 Check [this issue](https://github.com/ng-matero/ng-matero/issues/18) to know the develop plans.
 
